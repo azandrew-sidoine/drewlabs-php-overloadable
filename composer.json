@@ -1,0 +1,38 @@
+{
+    "name": "drewlabs/overloadable",
+    "description": "Provides function overloading to PHP language. It's an experimental feature as it may not be optimized for all use-case",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Drewlabs\\Overloadable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drewlabs\\Overloadable\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "azandrew-sidoine",
+            "email": "asmyns.platonnas29@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.3",
+        "drewlabs/core-helpers": "^2.3",
+        "symfony/polyfill-php81": "^1.24"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:liksoft/drewlabs-php-core-helpers.git"
+        }
+    ]
+}

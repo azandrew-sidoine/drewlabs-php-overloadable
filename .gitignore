@@ -1,0 +1,5 @@
+/vendor
+/composer.lock.json
+composer.lock
+.vscode
+metals/
