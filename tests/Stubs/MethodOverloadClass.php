@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable\Tests\Stubs;
 
-use Drewlabs\Overloadable\Lang\ArgumentType;
+use Drewlabs\Overloadable\ArgumentType;
 use Drewlabs\Overloadable\Overloadable;
 
 class MethodOverloadClass

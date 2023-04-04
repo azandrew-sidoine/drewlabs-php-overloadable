@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable\Tests\Unit;
 
-use Drewlabs\Overloadable\OverloadMethodCallExpection;
+use Drewlabs\Overloadable\MethodCallExpection;
 use Drewlabs\Overloadable\Tests\Stubs\ConsoleLogger;
 use Drewlabs\Overloadable\Tests\Stubs\FileLogger;
 use Drewlabs\Overloadable\Tests\Stubs\MethodOverloadClass;
@@ -37,7 +37,7 @@ class MethodOverloadingTest extends TestCase
 
     public function test_overload_throws_exception_for_missing_overload()
     {
-        $this->expectException(OverloadMethodCallExpection::class);
+        $this->expectException(MethodCallExpection::class);
         $test = new TestClass();
         $this->assertSame('ERROR024: Logging to the system resource...', $test->log(new FileLogger, []), 'Expect FileLogger::log to be called');
 

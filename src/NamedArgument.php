@@ -11,18 +11,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\Overloadable\Lang;
+namespace Drewlabs\Overloadable;
 
-use Drewlabs\Overloadable\Lang\Traits\Argument as TraitsFuncArgument;
+use Drewlabs\Overloadable\Concerns\Argument;
 
-class Argument
+class NamedArgument
 {
-    use TraitsFuncArgument;
+    use Argument;
 
     /**
      * Parameter holding the state of the parameter.
-     *
-     * @see ./FuncParameterEnum.php
      *
      * @var string|int
      */
@@ -35,10 +33,25 @@ class Argument
      */
     private $type;
 
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Creates class instance
+     * 
+     * @param string $name 
+     * @param null|string $type 
+     * @param null|string $state 
+     * @return void 
+     */
     public function __construct(
+        string $name = 'unknown',
         ?string $type = DataTypes::ANY,
         ?string $state = ArgumentType::REQUIRED
     ) {
+        $this->name = $name;
         $this->type = $type;
         $this->state = $state;
     }
@@ -51,5 +64,15 @@ class Argument
     public function __toString()
     {
         return sprintf('%s:%s', $this->getType(), $this->isOptional() ? ArgumentType::OPTIONAL : ArgumentType::REQUIRED);
+    }
+
+    /**
+     * Returns the argument's name
+     * 
+     * @return null|string 
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 }

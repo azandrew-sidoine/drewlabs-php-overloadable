@@ -11,12 +11,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\Overloadable\Lang\Traits;
+namespace Drewlabs\Overloadable\Concerns;
 
-use Drewlabs\Overloadable\Lang\ArgumentType;
+use Drewlabs\Overloadable\ArgumentType;
 
 trait Argument
 {
+    /**
+     * Returns true if the argument is an optional argument
+     * 
+     * @return bool 
+     */
     public function isOptional(): bool
     {
         return ArgumentType::OPTIONAL === $this->state;

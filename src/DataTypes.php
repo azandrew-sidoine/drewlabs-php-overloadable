@@ -11,54 +11,54 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\Overloadable\Lang;
+namespace Drewlabs\Overloadable;
 
-class DataTypes
+final class DataTypes
 {
     /**
      * PHP mixed|any variable type.
      */
-    public const ANY = '*';
+    const ANY = '*';
 
     /**
      * PHP double variables' data type.
      */
-    public const T_DOUBLE = 'double';
+    const T_DOUBLE = 'double';
 
     /**
      * PHP boolean variables' data type.
      */
-    public const T_BOOLEAN = 'boolean';
+    const T_BOOLEAN = 'boolean';
 
     /**
      * PHP integer variables' data type.
      */
-    public const T_INTEGER = 'integer';
+    const T_INTEGER = 'integer';
 
     /**
      * PHP string variables' data type.
      */
-    public const T_STRING = 'string';
+    const T_STRING = 'string';
 
     /**
      * PHP array variables' data type.
      */
-    public const STD_ARRAY = 'array';
+    const STD_ARRAY = 'array';
 
     /**
      * PHP stdClass variables' data type.
      */
-    public const T_OBJECT = 'object';
+    const T_OBJECT = 'object';
 
     /**
      * PHP resource variables' data type
      * 
      * Note: Resource is closed as of PHP 2.0.
      */
-    public const T_RESOURCE = 'resource';
+    const T_RESOURCE = 'resource';
 
     /**
      * PHP NoneType variables' data type.
      */
-    public const T_NULL = 'NULL';
+    const T_NULL = 'NULL';
 }

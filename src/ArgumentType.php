@@ -13,6 +13,15 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable;
 
-class OverloadMethodCallExpection extends \Exception
+class ArgumentType
 {
+    /**
+     * Required parameter enumeration value.
+     */
+    const REQUIRED = 'R';
+
+    /**
+     * Optional parameter enumeration value.
+     */
+    const OPTIONAL = 'O';
 }

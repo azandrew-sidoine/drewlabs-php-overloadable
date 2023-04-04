@@ -11,17 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\Overloadable\Lang;
+namespace Drewlabs\Overloadable;
 
-class ArgumentType
+class MethodCallExpection extends \Exception
 {
-    /**
-     * Required parameter enumeration value.
-     */
-    public const REQUIRED = 'required';
-
-    /**
-     * Optional parameter enumeration value.
-     */
-    public const OPTIONAL = 'optional';
 }

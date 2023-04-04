@@ -13,17 +13,11 @@ In a composer.json at your project or library root folder add the following:
 
 ```json
 {
+    // ...
     "require": {
         "drewlabs/overloadable": "^0.1.0"
-    },
-    // Because the package is a github package an not officially deploy to composer
-    // official package repositories, you must include this line in your composer.json
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/liksoft/drewlabs-php-overloadable.git"
-        }
-    ]
+    }
+    // ...
 }
 ```
 
