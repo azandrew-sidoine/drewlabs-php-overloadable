@@ -71,20 +71,16 @@ class OverloadedMethod
             return empty($args);
         }
         $value_args_count = \count($args);
-        if ((0 === $this->arguments->optionalArgumentsCount()) && ($arguments_ = $this->arguments->getAll())) {
-            return $value_args_count === \count($arguments_) &&
-                $this->argsMatch($arguments_, $args);
+        if ((0 === $this->arguments->optionalArgumentsCount()) && ($arguments = $this->arguments->getAll())) {
+            return $value_args_count === \count($arguments) && $this->argsMatch($arguments, $args);
         }
         // Get all the arguments
-        $arguments_ = $this->arguments->getAll();
-        $total_argument_count = \count($arguments_);
+        $arguments = $this->arguments->getAll();
+        $total_argument_count = \count($arguments);
         if ($value_args_count > $this->arguments->requiredArgumentsCount()) {
-            $arguments_ = $value_args_count > $total_argument_count ?
-                \array_slice($arguments_, 0, $total_argument_count) :
-                \array_slice($arguments_, 0, $value_args_count);
+            $arguments = $value_args_count > $total_argument_count ? \array_slice($arguments, 0, $total_argument_count) : \array_slice($arguments, 0, $value_args_count);
         }
-
-        return $this->argsMatch($arguments_, $args);
+        return $this->argsMatch($arguments, $args);
     }
 
     /**
