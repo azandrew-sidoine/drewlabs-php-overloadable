@@ -13,11 +13,7 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable\Tests\Stubs;
 
-class FileLogger implements Logger
+interface Console
 {
-    public function log(?string $prefix = null): string
-    {
-        return "${prefix}: Logging to the system resource...";
-    }
-
+    public function write(...$arg);
 }

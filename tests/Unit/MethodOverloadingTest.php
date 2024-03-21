@@ -48,4 +48,15 @@ class MethodOverloadingTest extends TestCase
         $this->assertTrue('METHOD B' === (new MethodOverloadClass())->someMethod(new \DateTime(), [], 20), 'Expect the return value of MethodOverloadClass::someMethod to return METHOD B');
         $this->assertTrue('METHOD C' === (new MethodOverloadClass())->someMethod([], []), 'Expect the return value of MethodOverloadClass::someMethod to return METHOD C');
     }
+
+
+    public function test_intersection_and_union_type_overload()
+    {
+        $fLogger = new FileLogger;
+        $cLogger = new ConsoleLogger;
+        $instance = new TestClass;
+
+        $this->assertEquals("fLogger!: Logging to the system resource...", $instance->writeLog($fLogger, "fLogger!"));
+        $this->assertEquals("Writing to console: cLogger", $instance->writeLog($cLogger, "cLogger"));
+    }
 }

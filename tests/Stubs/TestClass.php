@@ -30,4 +30,16 @@ class TestClass
             },
         ]);
     }
+
+    public function writeLog(...$args)
+    {
+        return $this->overload($args, [
+            static function (Console&Logger $logger, string $value) {
+                return $logger->write($value);
+            },
+            static function (Logger|Console $logger, ?string $prefix = null) {
+                return $logger->log($prefix ?? 'ERROR024');
+            },
+        ]);
+    }
 }

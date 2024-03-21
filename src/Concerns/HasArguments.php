@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable\Concerns;
 
+use Drewlabs\Overloadable\OverloadMethodArguments;
+
 trait HasArguments
 {
     /**

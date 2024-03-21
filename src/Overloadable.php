@@ -36,11 +36,10 @@ trait Overloadable
                 }
             ),
             static function (OverloadedMethod $candidate) use ($args, $fallbacks) {
-                $matches = $candidate->matches($args ?? []);
                 if ($candidate->isFallback()) {
                     $fallbacks[] = $candidate;
                 }
-                return $matches;
+                return $candidate->matches($args ?? []);
             },
             false
         );
@@ -66,6 +65,7 @@ trait Overloadable
                     }
                     $arguments = $curr->getArguments();
                     $carry_arguments = $carry->getArguments();
+                    
                     foreach (TypesUtil::zip($arguments, $carry_arguments) as $value) {
                         if (false !== strpos($value[0] ?? '', sprintf('%s:', DataTypes::ANY))) {
                             $carry = $carry;

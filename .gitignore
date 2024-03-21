@@ -1,5 +1,4 @@
 /vendor
-/composer.lock.json
-composer.lock
-.vscode
+.vscode/
 metals/
+.DS_Store

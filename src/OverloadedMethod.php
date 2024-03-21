@@ -16,7 +16,6 @@ namespace Drewlabs\Overloadable;
 use BadMethodCallException;
 use Closure;
 use Drewlabs\Overloadable\Concerns\HasArguments;
-use Drewlabs\Overloadable\DataTypes;
 use Drewlabs\Overloadable\Argument;
 use Exception;
 
@@ -181,19 +180,14 @@ class OverloadedMethod
         return array_reduce(
             TypesUtil::zip($params, $arguments),
             static function ($isMatch, $argAndType) {
+                /**
+                 * @var Argument|NamedArgument|IntersectionTypeArgument|UnionTypeArgument $type
+                 */
                 [$arg, $type] = $argAndType;
                 if (null === $type) {
                     return null === $arg ? $isMatch && true : $isMatch && false;
                 }
-                $type_class = \gettype($arg);
-                $arg_class = $type->getType();
-                $is_arg_instance_of = $arg instanceof $arg_class;
-                $arg_null_for_optional = null === $arg && $type->isOptional();
-
-                return $isMatch && ($arg_null_for_optional ||
-                    DataTypes::ANY === $arg_class ||
-                    $type_class === $arg_class ||
-                    $is_arg_instance_of);
+                return $isMatch && $type->match($arg);
             },
             true
         );

@@ -13,18 +13,12 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable;
 
-use Drewlabs\Overloadable\Concerns\Argument;
-
 class NamedArgument
 {
-    use Argument;
-
     /**
-     * Parameter holding the state of the parameter.
-     *
-     * @var string|int
+     * @var bool
      */
-    private $state;
+    private $optional;
 
     /**
      * Property holding the parameter type.
@@ -41,19 +35,20 @@ class NamedArgument
     /**
      * Creates class instance
      * 
-     * @param string $name 
-     * @param null|string $type 
-     * @param null|string $state 
+     * @param string        $name 
+     * @param null|string   $type 
+     * @param bool          $optional
+     * 
      * @return void 
      */
     public function __construct(
         string $name = 'unknown',
-        ?string $type = DataTypes::ANY,
-        ?string $state = ArgumentType::REQUIRED
+        string $type = DataTypes::ANY,
+        bool $optional = false
     ) {
         $this->name = $name;
         $this->type = $type;
-        $this->state = $state;
+        $this->optional = $optional;
     }
 
     /**
@@ -66,13 +61,47 @@ class NamedArgument
         return sprintf('%s:%s', $this->getType(), $this->isOptional() ? ArgumentType::OPTIONAL : ArgumentType::REQUIRED);
     }
 
-    /**
-     * Returns the argument's name
-     * 
-     * @return null|string 
-     */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
+    }
+
+    public function isOptional(): bool
+    {
+        return $this->optional;
+    }
+
+    /**
+     * Returns the argument type binded to the current Function argument.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Checks if `$name` exists in `getType()` returned string
+     *  
+     * @param mixed $name
+     * 
+     * @return bool 
+     */
+    public function match($value)
+    {
+        if (is_null($value) && $this->isOptional()) {
+            return true;
+        }
+
+        if (DataTypes::ANY === $this->type) {
+            return true;
+        }
+
+        if (is_object($value) && is_a($value, $this->type)) {
+            return true;
+        }
+
+        return gettype($value) === $this->type;
     }
 }

@@ -13,9 +13,15 @@ declare(strict_types=1);
 
 namespace Drewlabs\Overloadable\Tests\Stubs;
 
-class ConsoleLogger
+class ConsoleLogger implements Logger, Console
 {
-    public function log()
+
+    public function write(...$args)
+    {
+        return implode(" ", ["Writing to console:", ...$args]);
+    }
+    
+    public function log(): string
     {
         return 'Logging to the console...';
     }

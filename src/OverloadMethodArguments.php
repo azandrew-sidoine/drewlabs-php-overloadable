@@ -79,7 +79,6 @@ class OverloadMethodArguments
      */
     public static function fromArray(array $values = [])
     {
-        // TODO : Initialize values
         $optinal_args_count = 0;
         $required_args_count = 0;
         $required_arguments = [];
@@ -105,7 +104,7 @@ class OverloadMethodArguments
                 $type = DataTypes::ANY;
                 $state = ArgumentType::OPTIONAL;
             }
-            $funcArg = new Argument($type, $state);
+            $funcArg = new Argument($type, $state === ArgumentType::OPTIONAL);
             if ($funcArg->isOptional()) {
                 ++$optinal_args_count;
                 $optional_arguments[] = $funcArg;
@@ -134,27 +133,29 @@ class OverloadMethodArguments
      */
     public static function fromReflection($reflection)
     {
-
-        // TODO : Initialize values
         $optinal_args_count = 0;
         $required_args_count = 0;
         $optional_arguments = [];
         $required_arguments = [];
         // #endregion Initialize values
         foreach ($reflection->getParameters() as $parameter) {
-            $arg = new NamedArgument(
-                $parameter->getName(),
-                (!$parameter->hasType() ||
-                    (class_exists(ReflectionUnionType::class) && $parameter->getType() instanceof ReflectionUnionType) ||
-                    (class_exists(ReflectionIntersectionType::class) && $parameter->getType() instanceof ReflectionIntersectionType)) ?
-                    DataTypes::ANY : $parameter->getType()->getName(),
-                $parameter->isOptional() ? ArgumentType::OPTIONAL : ArgumentType::REQUIRED
-            );
+            /**
+             * @var \ReflectionNamedType|\ReflectionUnionType|\ReflectionIntersectionType
+             */
+            $type = $parameter->getType();
+            if (class_exists(ReflectionUnionType::class) && ($type instanceof ReflectionUnionType)) {
+                $arg = new UnionTypeArgument($type, $parameter->getName(), $parameter->isOptional());
+            } else if (class_exists(ReflectionIntersectionType::class) && $type instanceof ReflectionIntersectionType) {
+                $arg = new IntersectionTypeArgument($type, $parameter->getName(), $parameter->isOptional());
+            } else if (!$parameter->hasType()) {
+                $arg = new NamedArgument($parameter->getName(), DataTypes::ANY, $parameter->isOptional());
+            } else {
+                $arg = new NamedArgument($parameter->getName(), $type->getName(), $parameter->isOptional());
+            }
             if ($parameter->isOptional()) {
                 ++$optinal_args_count;
                 $optional_arguments[] = $arg;
-            }
-            if (!$parameter->isOptional()) {
+            } else {
                 ++$required_args_count;
                 $required_arguments[] = $arg;
             }
@@ -255,13 +256,13 @@ class OverloadMethodArguments
                     return new NamedArgument(
                         $type instanceof NamedArgument ? $type->getName() : '*',
                         DataTypes::T_INTEGER,
-                        $type->isOptional() ? ArgumentType::OPTIONAL : ArgumentType::REQUIRED
+                        $type->isOptional()
                     );
                 case 'bool':
                     return new NamedArgument(
                         $type instanceof NamedArgument ? $type->getName() : '*',
                         DataTypes::T_BOOLEAN,
-                        $type->isOptional() ? ArgumentType::OPTIONAL : ArgumentType::REQUIRED
+                        $type->isOptional()
                     );
                 default:
                     return $type;
